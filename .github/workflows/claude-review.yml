@@ -1,0 +1,57 @@
+name: Claude Auto Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  claude-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      actions: write
+      checks: write
+      deployments: write
+      id-token: write
+      packages: write
+      pages: write
+      repository-projects: write
+      security-events: write
+      statuses: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.CLAUDE_GITHUB_TOKEN }}
+
+      - name: Auto Review and Fix PR
+        uses: anthropics/claude-code-action@beta
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.CLAUDE_GITHUB_TOKEN }}
+          allowed_tools: "Bash(git:*),View,GlobTool,GrepTool,Write,BatchTool"
+          direct_prompt: |
+            Please review this pull request and provide comprehensive feedback on:
+            
+            **Code Quality:**
+            - Code structure and organization
+            - Best practices adherence
+            - Code readability and maintainability
+            
+            **Issues to Check:**
+            - Potential bugs or logic errors
+            - Security vulnerabilities
+            - Performance bottlenecks
+            - Error handling gaps
+            
+            **Suggestions:**
+            - If you find any issues, you can fix them directly by modifying the code
+            - Suggest improvements for better performance or readability
+            - Ensure code follows project standards
+            
+            **Important:** If you make any code changes, commit them to the same branch as this PR.
+            
+            Be thorough, constructive, and helpful in your review.
