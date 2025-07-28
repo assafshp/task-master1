@@ -21,6 +21,83 @@
     --focus-color: #2563eb;
 }
 
+/* Dark Theme */
+[data-theme="dark"] {
+    /* Background colors */
+    --bg-primary: #1a1a1a;
+    --bg-container: #2d2d2d;
+    --bg-display: #333333;
+    --bg-buttons: #404040;
+    --bg-buttons-hover: #4a4a4a;
+    
+    /* Operator button colors */
+    --bg-operators: #4a8bc4;
+    --bg-operators-hover: #5a9bd4;
+    
+    /* Text colors */
+    --text-primary: #ffffff;
+    --text-operators: #ffffff;
+    
+    /* UI elements */
+    --border-color: #555;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    --focus-color: #60a5fa;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.theme-toggle {
+    background-color: var(--bg-container);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.theme-toggle:hover {
+    background-color: var(--bg-buttons-hover);
+    transform: scale(1.05);
+}
+
+.theme-toggle:focus {
+    outline: 2px solid var(--focus-color);
+    outline-offset: 2px;
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+.theme-icon {
+    font-size: 1.5em;
+    transition: transform 0.3s ease;
+}
+
+/* Respect motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .theme-toggle,
+    .theme-icon {
+        transition: none;
+    }
+    
+    .theme-toggle:hover,
+    .theme-toggle:active {
+        transform: none;
+    }
+}
+
 /* Base Layout */
 body {
     display: flex;

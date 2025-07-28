@@ -97,10 +97,46 @@ export function _setOperator(value) { operator = value; }
 export function _getNewInput() { return newInput; }
 export function _setNewInput(value) { newInput = value; }
 
+// Theme management functions
+export function initializeTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    applyTheme(savedTheme);
+}
+
+export function applyTheme(theme) {
+    const body = document.body;
+    const themeIcon = document.querySelector('.theme-icon');
+    
+    if (theme === 'dark') {
+        body.setAttribute('data-theme', 'dark');
+        if (themeIcon) themeIcon.textContent = '☀️';
+    } else {
+        body.removeAttribute('data-theme');
+        if (themeIcon) themeIcon.textContent = '🌙';
+    }
+    
+    localStorage.setItem('theme', theme);
+}
+
+export function toggleTheme() {
+    const currentTheme = document.body.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    applyTheme(newTheme);
+}
+
 // Initialize and attach event listeners on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
     const displayElement = document.getElementById('display');
     updateDisplay(displayElement);
+    
+    // Initialize theme
+    initializeTheme();
+    
+    // Theme toggle event listener
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+    }
 
     document.querySelectorAll('.number').forEach(button => {
         button.addEventListener('click', () => {
