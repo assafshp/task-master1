@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.CLAUDE_GITHUB_TOKEN }}
 
-      - name: Auto Review and Fix PR
+      - name: Auto Review (and Fix PR)
         uses: anthropics/claude-code-action@beta
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -48,10 +48,8 @@ jobs:
             - Error handling gaps
             
             **Suggestions:**
-            - If you find any issues, you can fix them directly by modifying the code
             - Suggest improvements for better performance or readability
             - Ensure code follows project standards
             
-            **Important:** If you make any code changes, commit them to the same branch as this PR.
             
             Be thorough, constructive, and helpful in your review.
