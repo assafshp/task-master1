@@ -55,11 +55,11 @@ body {
     box-sizing: border-box;
 }
 
-/* Calculator Buttons Grid */
+/* Calculator Buttons Grid - 4x5 layout with equal column widths */
 .calculator-buttons {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
+    grid-template-columns: repeat(4, 1fr); /* 4 equal columns for calculator layout */
+    gap: 1px; /* Minimal gap between buttons for clean appearance */
     background-color: var(--bg-primary);
 }
 
@@ -72,6 +72,13 @@ body {
     cursor: pointer;
     transition: background-color 0.2s;
     box-sizing: border-box;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .calculator-buttons button {
+        transition: none;
+    }
 }
 
 .calculator-buttons button:focus {
@@ -103,6 +110,7 @@ body {
     outline-offset: -2px;
 }
 
+/* Zero button spans 2 columns for traditional calculator layout */
 .calculator-buttons .zero {
     grid-column: span 2;
 }
