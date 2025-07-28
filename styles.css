@@ -86,8 +86,24 @@ body {
     outline-offset: -2px;
 }
 
-.calculator-buttons button:hover {
-    background-color: var(--bg-buttons-hover);
+/* Only show hover effects on devices that can actually hover */
+@media (hover: hover) {
+    .calculator-buttons button:hover {
+        background-color: var(--bg-buttons-hover);
+    }
+}
+
+/* Active state for immediate visual feedback on all devices */
+.calculator-buttons button:active {
+    transform: scale(0.98);
+}
+
+/* Respect motion preferences for active state */
+@media (prefers-reduced-motion: reduce) {
+    .calculator-buttons button:active {
+        transform: none;
+        background-color: var(--bg-buttons-hover);
+    }
 }
 
 .calculator-buttons .operator,
@@ -97,10 +113,29 @@ body {
     color: var(--text-operators);
 }
 
-.calculator-buttons .operator:hover,
-.calculator-buttons .equals:hover,
-.calculator-buttons .clear:hover {
-    background-color: var(--bg-operators-hover);
+/* Operator hover states only on hover-capable devices */
+@media (hover: hover) {
+    .calculator-buttons .operator:hover,
+    .calculator-buttons .equals:hover,
+    .calculator-buttons .clear:hover {
+        background-color: var(--bg-operators-hover);
+    }
+}
+
+/* Operator active states for immediate feedback */
+.calculator-buttons .operator:active,
+.calculator-buttons .equals:active,
+.calculator-buttons .clear:active {
+    transform: scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .calculator-buttons .operator:active,
+    .calculator-buttons .equals:active,
+    .calculator-buttons .clear:active {
+        transform: none;
+        background-color: var(--bg-operators-hover);
+    }
 }
 
 .calculator-buttons .operator:focus,
@@ -110,7 +145,7 @@ body {
     outline-offset: -2px;
 }
 
-/* Zero button spans 2 columns for traditional calculator layout */
+/* Zero button spans 2 columns (columns 1-2) for traditional calculator layout */
 .calculator-buttons .zero {
     grid-column: span 2;
 }
