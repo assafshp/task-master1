@@ -1,0 +1,162 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Project Structure",
+        "description": "Create the initial project structure with HTML, CSS, and JavaScript files",
+        "details": "Create the following files:\n1. index.html - Main HTML file with calculator structure\n2. styles.css - CSS file for styling\n3. script.js - JavaScript file for calculator logic\n\nHTML structure should include:\n- Calculator container div\n- Display area\n- Button grid for numbers 0-9\n- Operation buttons (+, -, *, /)\n- Decimal point button\n- Clear button\n- Equals button\n\nSetup basic CSS to create a centered calculator with a grid layout for buttons.",
+        "testStrategy": "Manually verify that all files are created correctly and the basic structure renders in a browser. Ensure the calculator has a clean, minimalist design as specified in the PRD.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Implement Calculator Display",
+        "description": "Create the display component that shows current input and calculation results",
+        "details": "In the HTML, create a dedicated display element with appropriate styling.\n\nIn CSS:\n- Style the display with large, easy-to-read font\n- Add appropriate padding and margins\n- Ensure text aligns to the right\n- Add overflow handling for large numbers\n\nIn JavaScript:\n- Create a function to update the display\n- Initialize display with '0'\n\n```javascript\n// Example display update function\nfunction updateDisplay(value) {\n  document.getElementById('display').textContent = value;\n}\n```",
+        "testStrategy": "Test that the display initializes correctly with '0'. Verify that the display is readable and properly styled according to the UI/UX considerations in the PRD. Test overflow handling with very large numbers.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Implement Number Input Handling",
+        "description": "Create functionality to handle numeric button inputs (0-9)",
+        "details": "In JavaScript:\n1. Add event listeners to all number buttons\n2. Implement logic to update the current input value when number buttons are clicked\n3. Handle cases where a new number should replace the display (after operation selection) vs. append to existing input\n\n```javascript\n// Example number input handling\nlet currentInput = '0';\nlet newInput = false; // Flag to determine if input should be replaced or appended\n\nfunction handleNumberInput(num) {\n  if (currentInput === '0' || newInput) {\n    currentInput = num;\n    newInput = false;\n  } else {\n    currentInput += num;\n  }\n  updateDisplay(currentInput);\n}\n\n// Add event listeners to number buttons\ndocument.querySelectorAll('.number-btn').forEach(button => {\n  button.addEventListener('click', () => {\n    handleNumberInput(button.textContent);\n  });\n});\n```",
+        "testStrategy": "Test clicking each number button and verify the display updates correctly. Test sequences of number inputs to ensure they concatenate properly. Test that leading zeros are handled appropriately.",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Implement Decimal Point Functionality",
+        "description": "Add support for decimal point input to enable floating-point calculations",
+        "details": "In JavaScript:\n1. Add event listener to the decimal point button\n2. Implement logic to add a decimal point to the current input\n3. Ensure only one decimal point can be added to a number\n\n```javascript\nfunction handleDecimalPoint() {\n  if (!currentInput.includes('.')) {\n    currentInput += '.';\n  }\n  updateDisplay(currentInput);\n}\n\n// Add event listener to decimal button\ndocument.querySelector('.decimal-btn').addEventListener('click', handleDecimalPoint);\n```\n\nUpdate the number input handling to work with decimal values.",
+        "testStrategy": "Test adding a decimal point to numbers. Verify that multiple decimal points cannot be added to the same number. Test calculations with decimal numbers to ensure proper floating-point arithmetic.",
+        "priority": "medium",
+        "dependencies": [
+          3
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Implement Basic Arithmetic Operations",
+        "description": "Create functionality for addition, subtraction, multiplication, and division operations",
+        "details": "In JavaScript:\n1. Create variables to store the first operand and the selected operation\n2. Add event listeners to operation buttons\n3. Implement logic to handle operation selection\n\n```javascript\nlet firstOperand = null;\nlet operation = null;\n\nfunction handleOperation(op) {\n  firstOperand = parseFloat(currentInput);\n  operation = op;\n  newInput = true; // Set flag to replace input on next number entry\n}\n\n// Add event listeners to operation buttons\ndocument.querySelectorAll('.operation-btn').forEach(button => {\n  button.addEventListener('click', () => {\n    handleOperation(button.textContent);\n  });\n});\n```\n\nImplement a calculate function that performs the selected operation:\n\n```javascript\nfunction calculate() {\n  if (firstOperand === null || operation === null) return;\n  \n  const secondOperand = parseFloat(currentInput);\n  let result;\n  \n  switch(operation) {\n    case '+':\n      result = firstOperand + secondOperand;\n      break;\n    case '-':\n      result = firstOperand - secondOperand;\n      break;\n    case '*':\n      result = firstOperand * secondOperand;\n      break;\n    case '/':\n      result = secondOperand !== 0 ? firstOperand / secondOperand : 'Error';\n      break;\n  }\n  \n  currentInput = result.toString();\n  updateDisplay(currentInput);\n  firstOperand = null;\n  operation = null;\n  newInput = true;\n}\n```",
+        "testStrategy": "Test each arithmetic operation with various number combinations, including integers and decimals. Verify correct handling of division by zero. Test chaining multiple operations together.",
+        "priority": "high",
+        "dependencies": [
+          3,
+          4
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Implement Equals Button Functionality",
+        "description": "Create functionality to perform calculation when equals button is pressed",
+        "details": "In JavaScript:\n1. Add event listener to the equals button\n2. Call the calculate function when equals is pressed\n\n```javascript\n// Add event listener to equals button\ndocument.querySelector('.equals-btn').addEventListener('click', calculate);\n```\n\nEnsure the calculate function properly handles edge cases:\n- No operation selected\n- Multiple equals presses\n- Pressing equals immediately after an operation",
+        "testStrategy": "Test pressing equals after entering a complete calculation (number, operation, number). Test pressing equals multiple times. Test pressing equals without selecting an operation or second operand.",
+        "priority": "high",
+        "dependencies": [
+          5
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Implement Clear Functionality",
+        "description": "Add clear button to reset calculator state and display",
+        "details": "In JavaScript:\n1. Add event listener to the clear button\n2. Implement clear function to reset all calculator variables and display\n\n```javascript\nfunction clearCalculator() {\n  currentInput = '0';\n  firstOperand = null;\n  operation = null;\n  newInput = false;\n  updateDisplay(currentInput);\n}\n\n// Add event listener to clear button\ndocument.querySelector('.clear-btn').addEventListener('click', clearCalculator);\n```\n\nConsider implementing two types of clear:\n- AC (All Clear): Resets everything\n- C (Clear): Clears only the current input",
+        "testStrategy": "Test that pressing clear resets the calculator to its initial state. Test clearing during different stages of calculation (after entering first number, after selecting operation, after calculation).",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3,
+          5
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Implement Responsive Design",
+        "description": "Ensure calculator works well on different screen sizes",
+        "details": "In CSS:\n1. Use responsive units (%, rem, em) instead of fixed pixel values\n2. Implement media queries for different screen sizes\n3. Ensure buttons are large enough for touch input on mobile devices\n\n```css\n/* Example media query for smaller screens */\n@media (max-width: 480px) {\n  .calculator {\n    width: 100%;\n    max-width: 300px;\n  }\n  \n  .calculator-button {\n    font-size: 1.5rem;\n    padding: 1rem;\n  }\n}\n```\n\nTest on various device sizes and orientations to ensure the calculator remains usable and visually appealing.",
+        "testStrategy": "Test the calculator on multiple devices (desktop, tablet, mobile) and browsers. Verify that the layout adjusts appropriately and all buttons remain accessible and usable on smaller screens.",
+        "priority": "medium",
+        "dependencies": [
+          1
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Handle Edge Cases and Error Prevention",
+        "description": "Implement error handling for edge cases like division by zero",
+        "details": "In JavaScript:\n1. Add validation to prevent division by zero\n2. Handle floating-point precision issues\n3. Limit maximum input length to prevent display overflow\n4. Handle unexpected inputs or operations\n\n```javascript\n// Example division by zero handling\nfunction calculate() {\n  // ... existing code\n  \n  switch(operation) {\n    // ... other operations\n    case '/':\n      if (secondOperand === 0) {\n        currentInput = 'Error';\n      } else {\n        result = firstOperand / secondOperand;\n        // Handle floating point precision\n        result = Math.round(result * 1000000) / 1000000;\n      }\n      break;\n  }\n  \n  // ... rest of function\n}\n\n// Example input length limitation\nfunction handleNumberInput(num) {\n  if (currentInput.length >= 12) return; // Limit input length\n  \n  // ... rest of function\n}\n```",
+        "testStrategy": "Test division by zero and verify appropriate error message. Test calculations that could result in floating-point precision issues. Test entering very long numbers to ensure proper handling of display limitations.",
+        "priority": "medium",
+        "dependencies": [
+          5,
+          6
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Final Testing and Deployment",
+        "description": "Perform comprehensive testing and deploy the calculator to a web hosting service",
+        "details": "1. Conduct thorough testing of all calculator functions:\n   - Test all number inputs\n   - Test all operations\n   - Test decimal functionality\n   - Test clear functionality\n   - Test edge cases\n\n2. Optimize code:\n   - Minify CSS and JavaScript\n   - Optimize images if any\n   - Check for any performance issues\n\n3. Deploy to web hosting:\n   - Prepare files for deployment\n   - Upload to a static web hosting service (e.g., GitHub Pages, Netlify)\n   - Verify the deployed application works correctly\n\n4. Document any known issues or limitations for future enhancements",
+        "testStrategy": "Perform end-to-end testing of all calculator functionality. Test on multiple browsers (Chrome, Firefox, Safari, Edge) and devices. Verify that the deployed version works identically to the development version.",
+        "priority": "high",
+        "dependencies": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 11,
+        "title": "Add Jest Testing and Pass All Tests",
+        "description": "Set up Jest testing for the calculator app, refactor script.js for testability, write unit tests, and configure Jest/Babel to ensure tests pass.",
+        "details": "",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [],
+        "priority": "medium",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-28T06:52:03.495Z",
+      "updated": "2025-07-28T15:57:55.499Z",
+      "description": "Tasks for master context"
+    }
+  }
+}
