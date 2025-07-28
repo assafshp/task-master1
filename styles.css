@@ -1,17 +1,27 @@
+/* CSS Custom Properties for Light Theme */
 :root {
+    /* Background colors */
     --bg-primary: #e0e0e0;
     --bg-container: #f5f5f5;
     --bg-display: #ffffff;
     --bg-buttons: #f0f0f0;
     --bg-buttons-hover: #e8e8e8;
-    --bg-operators: #8ac0ff;
-    --bg-operators-hover: #6a9ee5;
+    
+    /* Operator button colors - darker for better contrast */
+    --bg-operators: #5a9bd4;
+    --bg-operators-hover: #4a8bc4;
+    
+    /* Text colors */
     --text-primary: #1a1a1a;
     --text-operators: #ffffff;
+    
+    /* UI elements */
     --border-color: #ddd;
     --shadow-color: rgba(0, 0, 0, 0.2);
+    --focus-color: #2563eb;
 }
 
+/* Base Layout */
 body {
     display: flex;
     justify-content: center;
@@ -22,6 +32,7 @@ body {
     margin: 0;
 }
 
+/* Calculator Container */
 .calculator-container {
     background-color: var(--bg-container);
     border-radius: 8px;
@@ -31,6 +42,7 @@ body {
     max-width: 90%; /* Added for responsiveness */
 }
 
+/* Calculator Display */
 .calculator-display {
     background-color: var(--bg-display);
     color: var(--text-primary);
@@ -43,6 +55,7 @@ body {
     box-sizing: border-box;
 }
 
+/* Calculator Buttons Grid */
 .calculator-buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -62,7 +75,7 @@ body {
 }
 
 .calculator-buttons button:focus {
-    outline: 2px solid var(--bg-operators);
+    outline: 2px solid var(--focus-color);
     outline-offset: -2px;
 }
 
@@ -86,7 +99,7 @@ body {
 .calculator-buttons .operator:focus,
 .calculator-buttons .equals:focus,
 .calculator-buttons .clear:focus {
-    outline: 2px solid var(--text-primary);
+    outline: 2px solid var(--focus-color);
     outline-offset: -2px;
 }
 
@@ -94,6 +107,7 @@ body {
     grid-column: span 2;
 }
 
+/* Responsive Design */
 @media (max-width: 480px) {
     .calculator-container {
         width: 100%;
