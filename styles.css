@@ -106,41 +106,41 @@ body {
     }
 }
 
-.calculator-buttons .operator,
-.calculator-buttons .equals,
-.calculator-buttons .clear {
+.calculator-buttons .operator-btn,
+.calculator-buttons .equals-btn,
+.calculator-buttons .clear-btn {
     background-color: var(--bg-operators);
     color: var(--text-operators);
 }
 
 /* Operator hover states only on hover-capable devices */
 @media (hover: hover) {
-    .calculator-buttons .operator:hover,
-    .calculator-buttons .equals:hover,
-    .calculator-buttons .clear:hover {
+    .calculator-buttons .operator-btn:hover,
+    .calculator-buttons .equals-btn:hover,
+    .calculator-buttons .clear-btn:hover {
         background-color: var(--bg-operators-hover);
     }
 }
 
 /* Operator active states for immediate feedback */
-.calculator-buttons .operator:active,
-.calculator-buttons .equals:active,
-.calculator-buttons .clear:active {
+.calculator-buttons .operator-btn:active,
+.calculator-buttons .equals-btn:active,
+.calculator-buttons .clear-btn:active {
     transform: scale(0.98);
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .calculator-buttons .operator:active,
-    .calculator-buttons .equals:active,
-    .calculator-buttons .clear:active {
+    .calculator-buttons .operator-btn:active,
+    .calculator-buttons .equals-btn:active,
+    .calculator-buttons .clear-btn:active {
         transform: none;
         background-color: var(--bg-operators-hover);
     }
 }
 
-.calculator-buttons .operator:focus,
-.calculator-buttons .equals:focus,
-.calculator-buttons .clear:focus {
+.calculator-buttons .operator-btn:focus,
+.calculator-buttons .equals-btn:focus,
+.calculator-buttons .clear-btn:focus {
     outline: 2px solid var(--focus-color);
     outline-offset: -2px;
 }
