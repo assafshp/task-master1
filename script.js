@@ -87,6 +87,41 @@ export function clearCalculator() {
     newInput = false;
 }
 
+// Theme management
+export function getTheme() {
+    return localStorage.getItem('theme') || 'light';
+}
+
+export function setTheme(theme) {
+    localStorage.setItem('theme', theme);
+    document.documentElement.setAttribute('data-theme', theme);
+    updateThemeToggleButton();
+}
+
+export function toggleTheme() {
+    const currentTheme = getTheme();
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+}
+
+export function updateThemeToggleButton() {
+    const toggleButton = document.getElementById('theme-toggle');
+    if (toggleButton) {
+        const currentTheme = getTheme();
+        if (currentTheme === 'dark') {
+            toggleButton.textContent = '☀️ Light';
+        } else {
+            toggleButton.textContent = '🌙 Dark';
+        }
+    }
+}
+
+export function initializeTheme() {
+    const savedTheme = getTheme();
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeToggleButton();
+}
+
 // For testing purposes, expose internal state if needed
 export function _getCurrentInput() { return currentInput; }
 export function _setCurrentInput(value) { currentInput = value; }
@@ -99,6 +134,9 @@ export function _setNewInput(value) { newInput = value; }
 
 // Initialize and attach event listeners on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize theme
+    initializeTheme();
+    
     const displayElement = document.getElementById('display');
     updateDisplay(displayElement);
 
@@ -129,5 +167,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.clear-btn').addEventListener('click', () => {
         clearCalculator();
         updateDisplay(displayElement);
+    });
+
+    // Theme toggle button event listener
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+        toggleTheme();
     });
 }); 

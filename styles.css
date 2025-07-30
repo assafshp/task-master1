@@ -19,6 +19,39 @@
     --border-color: #ddd;
     --shadow-color: rgba(0, 0, 0, 0.2);
     --focus-color: #2563eb;
+    
+    /* Theme toggle button */
+    --toggle-bg: #374151;
+    --toggle-bg-hover: #4b5563;
+    --toggle-text: #ffffff;
+}
+
+/* Dark Theme Variables */
+[data-theme="dark"] {
+    /* Background colors */
+    --bg-primary: #1f2937;
+    --bg-container: #374151;
+    --bg-display: #111827;
+    --bg-buttons: #4b5563;
+    --bg-buttons-hover: #6b7280;
+    
+    /* Operator button colors */
+    --bg-operators: #3b82f6;
+    --bg-operators-hover: #2563eb;
+    
+    /* Text colors */
+    --text-primary: #f9fafb;
+    --text-operators: #ffffff;
+    
+    /* UI elements */
+    --border-color: #4b5563;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --focus-color: #60a5fa;
+    
+    /* Theme toggle button */
+    --toggle-bg: #fbbf24;
+    --toggle-bg-hover: #f59e0b;
+    --toggle-text: #1f2937;
 }
 
 /* Base Layout */
@@ -150,6 +183,46 @@ body {
     grid-column: span 2;
 }
 
+/* Theme Toggle Button */
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: var(--toggle-bg);
+    color: var(--toggle-text);
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    z-index: 10;
+}
+
+.theme-toggle:hover {
+    background-color: var(--toggle-bg-hover);
+}
+
+.theme-toggle:focus {
+    outline: 2px solid var(--focus-color);
+    outline-offset: 2px;
+}
+
+.theme-toggle:active {
+    transform: scale(0.96);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .theme-toggle {
+        transition: none;
+    }
+    
+    .theme-toggle:active {
+        transform: none;
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 480px) {
     .calculator-container {
@@ -165,5 +238,12 @@ body {
     .calculator-buttons button {
         font-size: 1.2em;
         padding: 15px;
+    }
+    
+    .theme-toggle {
+        top: 10px;
+        right: 10px;
+        padding: 6px 12px;
+        font-size: 0.8em;
     }
 } 
